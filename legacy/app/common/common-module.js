@@ -90,6 +90,7 @@ angular
     .service('TranslationService', require('./services/translation.service.js'))
     .controller('navigation', require('./controllers/navigation.js'))
     .controller('intercom', require('./controllers/intercom.js'))
+    .controller('headway', require('./controllers/headway.js'))
     .service(
         'LoadingProgress',
         require('./services/loadingProgress.service.js')
