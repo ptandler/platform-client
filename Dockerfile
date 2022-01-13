@@ -21,7 +21,7 @@ RUN apt update && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ARG HTTP_PORT=8888
+ARG HTTP_PORT=8080
 
 WORKDIR /usr/share/nginx/html
 COPY --from=0 /var/app/build /var/app/app/config.js.j2 /var/app/app/config.json.j2 ./
