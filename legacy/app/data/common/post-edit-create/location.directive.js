@@ -9,6 +9,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         scope: {
             id: '@',
             name: '@',
+            initialPostLocation: '=',
             required: '='
         },
         template: require('./location.html'),
@@ -20,6 +21,13 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
             zoom = 8;
 
         $scope.processing = false;
+
+        // console.log('PostLocationLink(', $scope, element, attrs, ngModel)
+        if ($scope.initialPostLocation) {
+            // CAUTION: Leaflet uses lat/lng, but here lat/lon(!) is required ...
+            ngModel.$setViewValue({lat: $scope.initialPostLocation.lat, lon: $scope.initialPostLocation.lng});
+        }
+
         $scope.searchLocationTerm = '';
         $scope.searchLocation = searchLocation;
         $scope.manualModel = { lat: null, lon: null };

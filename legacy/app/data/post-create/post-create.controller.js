@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$stateParams',
     '$translate',
     '$location',
     '$controller',
@@ -8,6 +9,7 @@ module.exports = [
     'PostEndpoint',
 function (
     $scope,
+    $stateParams,
     $translate,
     $location,
     $controller,
@@ -26,4 +28,8 @@ function (
         $scope.post.allowed_privileges = options.allowed_privileges;
     });
     $scope.formId = $transition$.params().id;
+
+    if ($stateParams.lat && $stateParams.lng) {
+        $scope.post.initialPostLocation = new L.LatLng($stateParams.lat, $stateParams.lng);
+    }
 }];

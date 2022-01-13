@@ -24,13 +24,16 @@ function AddPostSurveyListController(
 ) {
 
     $scope.handleClick = handleClick;
-    TranslationService.getLanguage().then(language=>{
+    TranslationService.getLanguage().then(language => {
         $scope.userLanguage = language;
     });
 
     function handleClick(form) {
         $scope.closeMainsheet();
         $location.path('posts/create/' + form.id);
+        if ($scope.addPostAtLatLng && $scope.addPostAtLatLng.lat && $scope.addPostAtLatLng.lng) {
+            $location.search('lat', $scope.addPostAtLatLng.lat).search('lng', $scope.addPostAtLatLng.lng);
+        }
     }
 
 }

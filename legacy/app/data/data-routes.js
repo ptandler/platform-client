@@ -28,7 +28,7 @@ function (
                 /**
                  * This is enabling the feature of loading with a selectedPost "selected" in the data mode left side.
                  * Nothing happens if there no postId except for not having a selectedPost.
-                  */
+                 */
                 post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
                     if ($transition$.params().postId) {
                         return PostsSdk.findPost($transition$.params().postId)
@@ -87,7 +87,7 @@ function (
     .state(
         {
             name: 'postCreate',
-            url: '/posts/create/:id',
+            url: '/posts/create/:id?lat&lng',
             controller: require('./post-create/post-create.controller.js'),
             template: require('./post-create/main.html'),
             lazyLoad: function ($transition$) {

@@ -47,7 +47,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         defaultConfig: defaultConfig
     };
 
-    function createMap(element) {
+    function createMap(element, onClickCallback) {
         return getLeafletConfig().then(function (config) {
             var map = L.map(element, config);
             map.attributionControl.setPrefix(false);
@@ -59,6 +59,9 @@ function Maps(ConfigEndpoint, L, _, CONST) {
                 px.y -= e.popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
                 map.panTo(map.unproject(px), {animate: true}); // pan to new center
             });
+            if (onClickCallback) {
+                map.on('click', onClickCallback);
+            }
 
             // Add a layer control
             // L.control.layers(getBaseLayersForControl(), {}).addTo(map);

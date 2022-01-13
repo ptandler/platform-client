@@ -26,3 +26,4 @@ yarn-error.log*
 # junk
 *.DS_Store
 *.fuse*
+/.idea/

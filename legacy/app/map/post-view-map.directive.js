@@ -1,7 +1,12 @@
 module.exports = PostViewMap;
 
-PostViewMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location', '$timeout', '$state', '$translate'];
-function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location, $timeout, $state, $translate) {
+PostViewMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location', '$timeout', '$state', '$translate',
+    'Notify', 'MainsheetService', 'PostSurveyService'
+];
+
+function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location, $timeout, $state, $translate,
+                     Notify, MainsheetService, PostSurveyService
+) {
     return {
         restrict: 'E',
         replace: true,
@@ -18,7 +23,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var map, markers, posts;
         var geoJsonLayers = [];
         var currentGeoJsonRequests = [];
-        $scope.stats = {totalItems: 0, filteredPosts:0, unmapped: 0};
+        $scope.stats = {totalItems: 0, filteredPosts: 0, unmapped: 0};
 
         activate();
 
@@ -36,7 +41,29 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
             // Start loading data
             var mapSelector = $scope.noui ? '#map-noui' : '#map-full-size';
-            var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
+            var createMapDirective = Maps.createMap(element[0].querySelector(mapSelector),
+                function mapOnClickCallback(e) {
+                    console.log('map clicked: ', e, ', lat=', e.latlng.lat, ', lng=', e.latlng.lng)
+                    $scope.addPostAtLatLng = e.latlng;
+
+                    PostSurveyService
+                        .allowedSurveys()
+                        .then(function (forms) {
+                            $scope.forms = forms;
+                            if (forms.length > 0) {
+                                if (forms.length === 1) {
+                                    $location.path('/posts/create/' + forms[0].id).search('lat', e.latlng.lat).search('lng', e.latlng.lng);
+                                } else {
+                                    MainsheetService.openTemplate(
+                                        '<add-post-survey-list></add-post-survey-list>', 'app.submit_response', $scope
+                                    );
+                                }
+                            }
+                        }, function (errorResponse) {
+                            Notify.apiErrors(errorResponse);
+                        });
+
+                });
             var createMap = createMapDirective.then(function (data) {
                 map = data;
                 posts = loadPosts().then(() => {
@@ -141,11 +168,11 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             loadPosts(query);
         }
 
-        function getStats () {
+        function getStats() {
             // Getting stats for filter-dropdown
             getPostStats(PostFilters.getDefaults()).$promise.then(function (result) {
                 $scope.stats.totalItems = result.totals[0].values.reduce(
-                    function (a,b) {
+                    function (a, b) {
                         return a.total + b.total
                     }
                 ) - result.unmapped;
@@ -230,7 +257,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         var scope = $rootScope.$new();
                         scope.post = details;
                         scope.goToPost = goToPost;
-                        scope.selectedPost = {post : details};
+                        scope.selectedPost = {post: details};
 
                         var el = $compile('<post-card selected-post="selectedPost" post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
 
