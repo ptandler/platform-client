@@ -9,6 +9,7 @@ angular.module('ushahidi.map', [])
 .directive('postActions', require('./post-card/post-actions.directive.js'))
 .service('PostActionsService', require('./post-card/post-actions.service.js'))
 .directive('postMetadata', require('./post-card/post-metadata.directive.js'))
+.directive('postVotes', require('./post-card/post-votes.directive.js'))
 .service('PostMetadataService', require('./post-card/post-metadata.service.js'))
 .directive('collectionToggleLink', require('./post-card/collection-toggle/collection-toggle-link.js'))
 
