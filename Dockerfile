@@ -15,10 +15,10 @@ RUN npm run build
 
 FROM nginx
 
-RUN apt update && \
-    apt install --no-install-recommends -y python3-pip python3-setuptools python3-yaml && \
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y python3-pip python3-setuptools python3-yaml && \
     pip install 'jinja-cli==1.2.1' && \
-    apt clean && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG HTTP_PORT=8080
