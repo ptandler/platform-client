@@ -1,0 +1,10 @@
+version: "2"
+services:
+  platform-client:
+    build:
+      context: .
+      dockerfile: use-build.Dockerfile
+    environment:
+      BACKEND_URL: http://peta.iku.gmbh:8888
+    ports:
+      - "8888:8080"
