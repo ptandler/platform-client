@@ -51,6 +51,6 @@
         "single-spa": "^5.8.2",
         "single-spa-layout": "1.5.2",
         "svg-url-loader": "^7.1.1",
-        "ushahidi-platform-pattern-library": "^5.0.3-pre-donations"
+        "ushahidi-platform-pattern-library": "file:../../platform-pattern-library"
     }
 }
