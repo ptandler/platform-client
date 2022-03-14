@@ -61,8 +61,11 @@ module.exports = (webpackConfigEnv, argv) => {
                     },
                     {
                         from: path.resolve(__dirname, "src/importmap.json"),
-                    }
-
+                    },
+                    {
+                        from: path.resolve(__dirname, "assets/"),
+                        to: "",
+                    },
                 ],
             }),
         ],
