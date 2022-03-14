@@ -1,4 +1,7 @@
 .git
+.github
+.idea
+dist
 node_modules
 Dockerfile
 *.Dockerfile
@@ -7,3 +10,7 @@ tmp
 codeship-*
 deployment.env
 deployment.env.encrypted
+
+*.tar.gz
+*.tgz
+*.zip
