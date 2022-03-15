@@ -46,6 +46,14 @@
             <div class="button-group">
                 <donation></donation>
 <!--                <post-share button="true"></post-share>-->
+                <button
+                    class="button"
+                    ng-click="cancel($event)"
+                    aria-label="cancel"
+                    translate
+                >
+                    app.cancel
+                </button>
                 <button type="submit" class="button-alpha" ng-if="!saving_post">
                     {{submit}}
                 </button>
@@ -104,6 +112,14 @@
             <div class="toolbar-secondary">
                 <div class="button-group" ng-show="!post.id">
 <!--                    <post-share button="true" ng-show="!post.id"></post-share>-->
+                    <button
+                        class="button"
+                        ng-click="cancel($event)"
+                        aria-label="cancel"
+                        translate
+                    >
+                        app.cancel
+                    </button>
                     <button
                         type="submit"
                         class="button-alpha"

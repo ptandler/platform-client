@@ -30,7 +30,7 @@ PostEditorController.$inject = [
     'SurveysSdk',
     'TranslationService',
     'PostsSdk'
-  ];
+];
 
 function PostEditorController(
     $scope,
@@ -48,7 +48,7 @@ function PostEditorController(
     SurveysSdk,
     TranslationService,
     PostsSdk
-  ) {
+) {
 
     // Setup initial stages container
     $scope.everyone = $filter('translate')('post.modify.everyone');
@@ -57,6 +57,7 @@ function PostEditorController(
     $scope.loadData = loadData;
     $scope.canSavePost = canSavePost;
     $scope.savePost = savePost;
+    $scope.cancel = cancel;
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
     $scope.submit = $translate.instant('app.submit');
@@ -90,10 +91,14 @@ function PostEditorController(
         return $q.all(requests).then(function (results) {
             $scope.post.form = results[0];
             $scope.post.post_content = results[0].tasks;
-            $scope.languages = {default: results[0].enabled_languages.default, active: results[0].enabled_languages.default,  available: [results[0].enabled_languages.default, ...results[0].enabled_languages.available]}
+            $scope.languages = {
+                default: results[0].enabled_languages.default,
+                active: results[0].enabled_languages.default,
+                available: [results[0].enabled_languages.default, ...results[0].enabled_languages.available]
+            }
             // Initialize values on new post
             $scope.post.post_content.map(task => {
-                task.fields.map (attr => {
+                task.fields.map(attr => {
                     // Create associated media entity
                     if (!attr.value) {
                         attr.value = {};
@@ -140,8 +145,7 @@ function PostEditorController(
                             } catch (err) {
                                 // What do do if the default-value is in the wrong format?
                             }
-                        }
-                        else {
+                        } else {
                             attr.value.value = attr.required ? dayjs(new Date()).format('YYYY-MM-DD') : null;
                         }
                     }
@@ -186,10 +190,10 @@ function PostEditorController(
                 if (post.id && post.allowed_privileges.indexOf('read') !== -1) {
                     $scope.saving_post = false;
                     $scope.post.id = post.id;
-                    Notify.notify(success_message, { name: $scope.post.title });
+                    Notify.notify(success_message, {name: $scope.post.title});
                     $state.go('posts.data.detail', {postId: post.id});
                 } else {
-                    Notify.notify(success_message, { name: post.title });
+                    Notify.notify(success_message, {name: post.title});
                     $state.go('posts.map.all');
                 }
             }, function (errorResponse) { // errors
@@ -197,5 +201,10 @@ function PostEditorController(
                 $scope.saving_post = false;
             });
         });
+    }
+
+    function cancel(event) {
+        event.preventDefault()
+        history.back();
     }
 }
