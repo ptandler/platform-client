@@ -18,11 +18,12 @@
                 >Search</label
             >
             <div class="input-with-icon">
+                <!-- TODO: add translation for "posts" -->
                 <input
                     name="q"
                     type="search"
                     autocomplete="off"
-                    placeholder="{{ 'toolbar.searchbar.search_entity' | translate }}"
+                    placeholder="{{ 'toolbar.searchbar.search_entity' | translate: { entity: 'Beiträge' } }}"
                     ng-model="filters.q"
                     ng-model-options="{debounce: 300}"
                     ng-click="toggleDropdown($event)"
