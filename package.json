@@ -14,7 +14,7 @@
         "copy:root": "cp -R root/dist/* build/",
         "copy:legacy": "cp -R legacy/dist/* build/",
         "copy:utilities": "cp -R utilities/dist/* build/",
-        "docker:from-build": "docker build -t ushahidi-client-iku:$(date +%Y-%m-%d--%H-%M) -t ushahidi-client-iku:latest -f use-build.Dockerfile .",
+        "docker:from-build": "docker build -t ushahidi-client-iku:$(date +%Y-%m-%d--%H-%M) -f use-build.Dockerfile .",
         "generate:import-map": "node ./server/scripts/generateImportMap.js",
         "lint": "npm run lint:legacy && npm run lint:utilities && npm run lint:api && npm run lint:root",
         "lint:api": "cd api && npm run lint",
