@@ -56,7 +56,8 @@ function SurveyEditorController(
     $scope.saving = false;
     $scope.currentInterimId = 0;
     $scope.survey = {
-        color: null
+        color: null,
+        icon_url: null
     };
     $scope.canReorderTask = canReorderTask;
     $scope.moveTaskUp = moveTaskUp;
@@ -100,6 +101,8 @@ function SurveyEditorController(
     $scope.roles = [];
     $scope.languagesToSelect = require('../../common/global/language-list.json');
 
+    $scope.marker_icons = ['idea', 'note', 'question'];
+
     $scope.onlyOptional = onlyOptional;
     $scope.anonymiseReportersEnabled = false;
     $scope.location_precision = 1000;
@@ -136,6 +139,7 @@ function SurveyEditorController(
             // pre-fill object with default tasks and attributes
             $scope.survey = {
                 color: null,
+                icon_url: null,
                 require_approval: true,
                 everyone_can_create: true,
                 translations: {},
@@ -704,6 +708,7 @@ function SurveyEditorController(
             $scope.removeInterimIds();
             $scope.survey.base_language =
                 $scope.survey.enabled_languages.default;
+            console.log("**** saveSurvey()", $scope.survey)
             SurveysSdk.saveSurvey($scope.survey)
                 .then((response) => {
                     $scope.survey = response.data.result;

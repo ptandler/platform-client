@@ -5,7 +5,7 @@
             <ol class="breadcrumbs">
                 <li>
                     <a href="/" ng-controller="navigation as nav"
-                        >{{nav.site.name}}</a
+                    >{{nav.site.name}}</a
                     >
                 </li>
                 <li><a href="/settings" translate>app.settings</a></li>
@@ -20,9 +20,9 @@
             <a
                 ng-show="targetedSurveysEnabled"
                 ui-sref="settings.surveys.targeted.create"
-                ><span translate="settings.send_targeted"
-                    >Send a targeted survey via SMS</span
-                >
+            ><span translate="settings.send_targeted"
+            >Send a targeted survey via SMS</span
+            >
                 ></a
             >
         </header>
@@ -93,7 +93,7 @@
                     <!--  TODO: add placeholder text-->
                     <form name="surveyName">
                         <label for="survey_name" translate required
-                            >survey.survey_name</label
+                        >survey.survey_name</label
                         >
                         <!-- Use once api handles translations  -->
                         <input
@@ -115,7 +115,7 @@
                                 ></use>
                             </svg>
                             <span translate="form.survey_name_required"
-                                >Survey-name is required</span
+                            >Survey-name is required</span
                             >
                         </div>
                     </form>
@@ -123,7 +123,7 @@
 
                 <div class="form-field survey">
                     <label for="survey_description" translate
-                        >app.description</label
+                    >app.description</label
                     >
                     <!-- Use once api handles translations  -->
                     <textarea
@@ -189,7 +189,7 @@
                                             ></use>
                                         </svg>
                                         <span class="label hidden"
-                                            >Move up</span
+                                        >Move up</span
                                         >
                                     </button>
                                     <button
@@ -205,7 +205,7 @@
                                             ></use>
                                         </svg>
                                         <span class="label hidden"
-                                            >Move down</span
+                                        >Move down</span
                                         >
                                     </button>
                                 </div>
@@ -257,7 +257,7 @@
                                         <span
                                             class="bug"
                                             translate="survey.response_private_desc"
-                                            >Only people with permission to edit
+                                        >Only people with permission to edit
                                             responses can see responses to this
                                             field</span
                                         >
@@ -281,7 +281,7 @@
                                             ></use>
                                         </svg>
                                         <span translate="survey.add_field"
-                                            >Add field</span
+                                        >Add field</span
                                         >
                                     </a>
                                 </h2>
@@ -298,7 +298,7 @@
                         <label
                             for="post-review"
                             translate="survey.require_review"
-                            >Require posts be reviewed before they're
+                        >Require posts be reviewed before they're
                             published</label
                         >
                         <p
@@ -330,7 +330,7 @@
                         <label
                             for="hide-author"
                             translate="survey.hide_author_information"
-                            >Hide author information</label
+                        >Hide author information</label
                         >
                         <p
                             ng-show="survey.hide_author"
@@ -360,7 +360,7 @@
                         <label
                             for="hide-location"
                             translate="survey.hide_location_information"
-                            >Hide location information</label
+                        >Hide location information</label
                         >
                         <p
                             ng-show="survey.hide_location"
@@ -391,7 +391,7 @@
                         <label
                             for="hide-time"
                             translate="survey.hide_time_information"
-                            >Hide exact time information</label
+                        >Hide exact time information</label
                         >
                         <p
                             ng-show="survey.hide_time"
@@ -438,7 +438,7 @@
                                     ng-model="survey.everyone_can_create"
                                 />
                                 <span class="label" translate="nav.everyone"
-                                    >Everyone</span
+                                >Everyone</span
                                 >
                             </label>
                         </div>
@@ -463,7 +463,7 @@
                                     ng-model="survey.everyone_can_create"
                                 />
                                 <span translate="app.specific_roles"
-                                    >Specific roles...</span
+                                >Specific roles...</span
                                 >
                             </label>
 
@@ -493,9 +493,38 @@
 
                     <color-picker color-container="survey"></color-picker>
 
+                    <!-- TODO add I18N! -->
+                    <fieldset class="form-list">
+                        <legend>
+                            Marker Icon für diese Umfrage
+                        </legend>
+                        <div class="form-row">
+                            <div class="form-column" ng-repeat="icon in marker_icons">
+                                <div class="form-field radio">
+                                    <label for="survey-marker-icon-{{icon}}">
+                                        <input
+                                            name="survey-marker-icon"
+                                            id="survey-marker-icon-{{icon}}"
+                                            ng-value="'/survey_icons/' + icon + '.svg'"
+                                            ng-checked="survey.icon_url === '/survey_icons/' + icon + '.svg'"
+                                            type="radio"
+                                            ng-model="survey.icon_url"
+                                        />
+                                        <div class="marker-icon"><img ng-src="/survey_icons/{{icon}}.svg"/></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <input name="survey-icon_url" id="survey-icon_url" ng-model="survey.icon_url" type="text"/>
+                            <label for="survey-icon_url">Sie können die URL zu einem eigenen Icon hier einfügen</label>
+                        </div>
+                    </fieldset>
+
+
                     <div class="form-field">
                         <label translate="translations.survey_select_default"
-                            >Select default language for this survey</label
+                        >Select default language for this survey</label
                         >
                         <p
                             class="alert"
@@ -553,7 +582,7 @@
                         for="section_name"
                         class="hidden"
                         translate="survey.task_name"
-                        >Section name</label
+                    >Section name</label
                     >
                     <input
                         id="section_name"
@@ -566,7 +595,7 @@
                         for="section_description"
                         class="hidden"
                         translate="survey.task_description"
-                        >Section description</label
+                    >Section description</label
                     >
                     <textarea
                         name="description"
@@ -588,7 +617,7 @@
                                 ></use>
                             </svg>
                             <span class="hidden" translate="app.more"
-                                >More</span
+                            >More</span
                             >
                         </button>
 
@@ -608,7 +637,7 @@
                                     <span
                                         class="label"
                                         translate="survey.duplicate_task"
-                                        >Duplicate task</span
+                                    >Duplicate task</span
                                     >
                                 </a>
                             </li>
@@ -627,7 +656,7 @@
                                     <span
                                         class="label"
                                         translate="survey.delete_task"
-                                        >Delete task</span
+                                    >Delete task</span
                                     >
                                 </a>
                             </li>
@@ -684,7 +713,7 @@
                                             ></use>
                                         </svg>
                                         <span class="label hidden"
-                                            >Move up</span
+                                        >Move up</span
                                         >
                                     </button>
                                     <button
@@ -700,7 +729,7 @@
                                             ></use>
                                         </svg>
                                         <span class="label hidden"
-                                            >Move down</span
+                                        >Move down</span
                                         >
                                     </button>
                                 </div>
@@ -751,7 +780,7 @@
                                         <span
                                             class="bug"
                                             translate="survey.response_private_desc"
-                                            >Only people with permission to edit
+                                        >Only people with permission to edit
                                             responses can see responses to this
                                             field</span
                                         >
@@ -775,7 +804,7 @@
                                             ></use>
                                         </svg>
                                         <span translate="survey.add_field"
-                                            >Add field</span
+                                        >Add field</span
                                         >
                                     </a>
                                 </h2>
@@ -791,7 +820,7 @@
                         <label
                             translate="survey.required"
                             for="task-required-{{task.id}}"
-                            >Required</label
+                        >Required</label
                         >
                         <p
                             data-fieldgroup-target="require-review-message"
@@ -822,7 +851,7 @@
                         <label
                             translate="survey.internal_use_task"
                             for="internal_only-{{task.id}}"
-                            >Task is only for internal use</label
+                        >Task is only for internal use</label
                         >
                         <!-- todo show list of roles with correct permission for clarity in message below-->
                         <p
@@ -856,7 +885,7 @@
                         <label
                             translate="survey.show_this_task_to"
                             for="show_section-{{task.id}}"
-                            >Show this task to everyone when published</label
+                        >Show this task to everyone when published</label
                         >
                         <p
                             data-fieldgroup-target="show_section-message"
@@ -905,7 +934,7 @@
                             ></use>
                         </svg>
                         <span class="button-label" translate="survey.add_task"
-                            >Add task</span
+                        >Add task</span
                         >
                     </button>
                 </div>
