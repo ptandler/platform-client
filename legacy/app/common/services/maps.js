@@ -177,7 +177,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             // overlay the image over the default colored marker
             return L.divIcon({
                 className: 'custom-map-marker ' + className,
-                html: '<svg class="iconic" style="fill:' + color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#map-marker"></use></svg><span class="iconic-bg" style="background-color:' + color + ';""><img src="' + iconUrl + '" style="width: 100%;"/></span>',
+                html: '<svg class="iconic" style="fill:' + color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#map-marker"></use></svg><span class="iconic-bg" style="background: none;"><img src="' + iconUrl + '" style="width: 100%;"/></span>',
                 iconSize: size,
                 iconAnchor: [size[0] / 2, size[1]],
                 popupAnchor: [0, 0 - size[1]]
