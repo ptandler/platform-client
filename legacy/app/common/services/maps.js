@@ -147,16 +147,43 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
     function pointToLayer(feature, latlng) {
         return L.marker(latlng, {
-            icon: pointIcon(feature.properties['marker-color'])
+            icon: pointIcon(
+                feature.properties['marker-color'],
+                feature.properties['marker-size'],
+                feature.properties['marker-className'],
+                feature.properties['icon_url'],
+            )
         });
     }
     // Icon configuration
-    function pointIcon(color, size, className) {
+    function pointIcon(color, size, className, iconUrl) {
         // Test string to make sure that it does not contain injection
         color = (color && /^[a-zA-Z0-9#]+$/.test(color)) ? color : '#959595';
         size = size || [32, 32];
         var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
 
+        if (iconUrl) {
+/*
+            return L.icon({
+                iconUrl: iconUrl,
+                iconSize: size,
+                iconAnchor: [size[0] / 2, size[1]],
+                popupAnchor: [0, 0 - size[1]],
+                // shadowUrl: 'my-icon-shadow.png',
+                // shadowSize: [68, 95],
+                // shadowAnchor: [22, 94]
+            });
+*/
+            // overlay the image over the default colored marker
+            return L.divIcon({
+                className: 'custom-map-marker ' + className,
+                html: '<svg class="iconic" style="fill:' + color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#map-marker"></use></svg><span class="iconic-bg" style="background-color:' + color + ';""><img src="' + iconUrl + '" style="width: 100%;"/></span>',
+                iconSize: size,
+                iconAnchor: [size[0] / 2, size[1]],
+                popupAnchor: [0, 0 - size[1]]
+            });
+
+        }
         return L.divIcon({
             className: 'custom-map-marker ' + className,
             html: '<svg class="iconic" style="fill:' + color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#map-marker"></use></svg><span class="iconic-bg" style="background-color:' + color + ';""></span>',
