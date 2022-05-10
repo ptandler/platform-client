@@ -54,7 +54,7 @@
         <!-- Post stage default fields -->
         <div
             ng-if="attribute.type==='description'"
-            class="form-field init required"
+            class="form-field init"
             ng-class="{
                 'error': form.content.$invalid && form.content.$dirty,
                 'success': !form.content.$invalid && form.content.$dirty
@@ -81,7 +81,7 @@
                 data-min-rows="1"
                 rows="1"
                 ng-model="post.content"
-                ng-required="true"
+                ng-required="false"
                 adaptive-input
                 msd-elastic
             >
