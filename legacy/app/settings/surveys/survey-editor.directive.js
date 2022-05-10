@@ -219,7 +219,7 @@ function SurveyEditorController(
     }
 
     function onlyOptional(editField) {
-        return editField.type !== 'title' && editField.type !== 'description';
+        return editField.type !== 'title' /* && editField.type !== 'description' */;
     }
 
     function switchTab(section, tab) {
