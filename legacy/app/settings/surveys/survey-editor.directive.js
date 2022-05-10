@@ -197,6 +197,7 @@ function SurveyEditorController(
                             ...$scope.survey.enabled_languages.available
                         ]
                     };
+                    $scope.selectedLanguage = language;
                 }
             });
             $scope.survey.tasks[0].id = $scope.getInterimId();
@@ -836,6 +837,7 @@ function SurveyEditorController(
                 active: language,
                 available: $scope.survey.enabled_languages.available
             };
+            $scope.selectedLanguage = language
             $scope.survey.enabled_languages.default = language;
         }
     };
