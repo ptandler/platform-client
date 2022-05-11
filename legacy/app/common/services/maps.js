@@ -1,6 +1,7 @@
 module.exports = Maps;
 
 Maps.$inject = ['ConfigEndpoint', 'Leaflet', '_', 'CONST'];
+
 function Maps(ConfigEndpoint, L, _, CONST) {
 
     // mapbox static tiles API styles
@@ -23,7 +24,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
     }
 
     var layers = {
-        baselayers : {
+        baselayers: {
             satellite: _mapboxStaticTiles('Satellite', 'mapbox/satellite-v9'),
             streets: _mapboxStaticTiles('Streets', 'mapbox/streets-v11'),
             hOSM: {
@@ -50,9 +51,13 @@ function Maps(ConfigEndpoint, L, _, CONST) {
     function createMap(element, onClickCallback) {
         return getLeafletConfig().then(function (config) {
             var map = L.map(element, config);
+            let geoLocationControl;
+
+            L.control.scale({imperial: false}).addTo(map);
+
             map.attributionControl.setPrefix(false);
             map.zoomControl.setPosition('bottomleft');
-            map.setMaxBounds([[-90,-360],[90,360]]);
+            map.setMaxBounds([[-90, -360], [90, 360]]);
             map.scrollWheelZoom.enable();
             map.on('popupopen', function (e) {
                 var px = map.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
@@ -66,15 +71,15 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             // Add a layer control
             // L.control.layers(getBaseLayersForControl(), {}).addTo(map);
             var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
-            var resetButton  = L.easyButton({
+            var resetButton = L.easyButton({
                 id: 'reset-button',
                 position: 'bottomleft',
                 type: 'replace',
                 leafletClasses: true,
-                states:[{
+                states: [{
                     // specify different icons and responses for your button
                     stateName: 'reset-button',
-                    onClick: function() {
+                    onClick: function () {
                         var defaultview = defaultValues(config);
                         map.setView([defaultview.lat, defaultview.lon], defaultview.zoom);
                     },
@@ -85,6 +90,15 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
             resetButton.addTo(map);
 
+            geoLocationControl = L.control.locate({
+                position: 'bottomleft',
+                locateOptions: {
+                    maximumAge: 60000, // 1 minute
+                    watch: true,
+                    setView: true,
+                },
+            }).addTo(map);
+
             return map;
         });
     }
@@ -94,28 +108,30 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             var defaultLayer = layers.baselayers[config.default_view.baselayer];
 
             return angular.extend(defaultConfig(),
-            {
-                layers: [L.tileLayer(defaultLayer.url, defaultLayer.layerOptions)],
-                center: [config.default_view.lat, config.default_view.lon],
-                zoom: config.default_view.zoom,
-                clustering: config.clustering
-            });
+                {
+                    layers: [L.tileLayer(defaultLayer.url, defaultLayer.layerOptions)],
+                    center: [config.default_view.lat, config.default_view.lon],
+                    zoom: config.default_view.zoom,
+                    clustering: config.clustering
+                });
         });
     }
 
     function getBaseLayers() {
         return layers.baselayers;
     }
+
     /* eslint-disable */
     function getBaseLayersForControl() {
         return _.chain(layers.baselayers)
-        .values()
-        .indexBy('name')
-        .mapObject(function (layer) {
-            return L.tileLayer(layer.url, layer.layerOptions);
-        })
-        .value();
+            .values()
+            .indexBy('name')
+            .mapObject(function (layer) {
+                return L.tileLayer(layer.url, layer.layerOptions);
+            })
+            .value();
     }
+
     /* eslint-enable */
 
     function getLayer(layerKey) {
@@ -124,7 +140,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
     }
 
     function getConfig(fresh) {
-        return ConfigEndpoint[fresh ? 'getFresh' : 'get']({ id: 'map' }).$promise.then(function (config) {
+        return ConfigEndpoint[fresh ? 'getFresh' : 'get']({id: 'map'}).$promise.then(function (config) {
             // Handle legacy layers
             if (config.default_view.baselayer === 'MapQuest') {
                 config.default_view.baselayer = 'streets';
@@ -155,6 +171,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             )
         });
     }
+
     // Icon configuration
     function pointIcon(color, size, className, iconUrl) {
         // Test string to make sure that it does not contain injection
@@ -163,17 +180,17 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
 
         if (iconUrl) {
-/*
-            return L.icon({
-                iconUrl: iconUrl,
-                iconSize: size,
-                iconAnchor: [size[0] / 2, size[1]],
-                popupAnchor: [0, 0 - size[1]],
-                // shadowUrl: 'my-icon-shadow.png',
-                // shadowSize: [68, 95],
-                // shadowAnchor: [22, 94]
-            });
-*/
+            /*
+                        return L.icon({
+                            iconUrl: iconUrl,
+                            iconSize: size,
+                            iconAnchor: [size[0] / 2, size[1]],
+                            popupAnchor: [0, 0 - size[1]],
+                            // shadowUrl: 'my-icon-shadow.png',
+                            // shadowSize: [68, 95],
+                            // shadowAnchor: [22, 94]
+                        });
+            */
             // overlay the image over the default colored marker
             return L.divIcon({
                 className: 'custom-map-marker ' + className,
