@@ -8,7 +8,7 @@
         "build:root": "cd root && npm run build",
         "build:legacy": "cd legacy && npm run build",
         "build:utilities": "cd utilities && npm run build",
-        "build:docker": "npm run build && npm run docker:from-build",
+        "build+docker": "npm run build && npm run docker:from-build",
         "build+start": "npm run build && npm run start",
         "copy": "mkdir -p build && npm run copy:api && npm run copy:utilities && npm run copy:root && npm run copy:legacy",
         "copy:api": "cp -R api/dist/* build/",
