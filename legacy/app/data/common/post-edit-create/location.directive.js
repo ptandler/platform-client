@@ -68,11 +68,14 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 // Add locate control, but only on https
                 if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
                     $scope.showCurrentPositionControl = true;
+                    // NOTE: moved to services/maps.js to have this always available
+/*
                     currentPositionControl = L.control.locate({
                         locateOptions: {
                             maximumAge: 60000 // 1 minute
                         }
                     }).addTo(map);
+*/
                 }
             });
 
