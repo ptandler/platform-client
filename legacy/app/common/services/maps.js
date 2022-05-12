@@ -90,14 +90,16 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
             resetButton.addTo(map);
 
-            geoLocationControl = L.control.locate({
-                position: 'bottomleft',
-                locateOptions: {
-                    maximumAge: 60000, // 1 minute
-                    watch: true,
-                    setView: true,
-                },
-            }).addTo(map);
+            if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
+                geoLocationControl = L.control.locate({
+                    position: 'bottomleft',
+                    locateOptions: {
+                        maximumAge: 60000, // 1 minute
+                        watch: true,
+                        setView: true,
+                    },
+                }).addTo(map);
+            }
 
             return map;
         });
