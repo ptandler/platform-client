@@ -1,7 +1,11 @@
 # Ushahidi ToDo things
 
-* [ ] wie ist das nun mit einer Lizenz von MapBox!?
+* [ ] wie ist das nun mit einer Lizenz von MapBox!? --> [issue on GitHub](https://github.com/ushahidi/platform/issues/4401#issuecomment-1127541009)
+  * [Mapbox pricing info](https://www.mapbox.com/pricing)
+  * see also: [MapLibre - fork of MapBox GL JS](https://www.maptiler.com/news/2021/01/mapbox-gl-open-source-fork/)
 * [ ] Bug - no emoji in DB! https://github.com/ushahidi/platform/issues/2362
+* [ ] Feat: Make image upload size configurable https://github.com/ushahidi/platform/issues/3988
+* [ ] Feat: shrink image on client size (compression and resolution)
 * [/] make description optional
   * [x] description field optional
   * [x] allow removing description field from survey
